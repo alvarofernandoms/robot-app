@@ -2,6 +2,7 @@ package com.br.robot_app_2;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -9,11 +10,16 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
     ArrayList<Integer> arrayOfInstructions = new ArrayList<>();
+
+    JSONObject myJSONobject = new JSONObject();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,7 +79,38 @@ public class MainActivity extends AppCompatActivity {
             if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
                 if (id == 5) {
                     for (int i = 0; i < arrayOfInstructions.size(); i++) {
+                        try {
+                            if (arrayOfInstructions.get(i) == 1) {
+                                JSONObject tempJSON = new JSONObject();
+                                tempJSON.put("position", (i + 1));
+                                tempJSON.put("duration", 1);
+                                tempJSON.put("power", 100);
+                                myJSONobject.put("moveForward" + (i + 1), tempJSON);
+                                System.out.println("DEBUG:  " + arrayOfInstructions.get(i));
+                            } else if (arrayOfInstructions.get(i) == 2) {
+                                JSONObject tempJSON = new JSONObject();
+                                tempJSON.put("position", (i + 1));
+                                tempJSON.put("degree", 180);
+                                tempJSON.put("power", 100);
+                                myJSONobject.put("turnLeft" + (i + 1), tempJSON);
+                                System.out.println("DEBUG:  " + arrayOfInstructions.get(i));
+                            } else if (arrayOfInstructions.get(i) == 3) {
+                                JSONObject tempJSON = new JSONObject();
+                                tempJSON.put("position", (i + 1));
+                                tempJSON.put("degree", 0);
+                                tempJSON.put("power", 100);
+                                myJSONobject.put("turnRight" + (i + 1), tempJSON);
+                                System.out.println("DEBUG:  " + arrayOfInstructions.get(i));
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                         System.out.println(arrayOfInstructions.get(i));
+                    }
+                    try {
+                        Log.d("json :", myJSONobject.toString(0));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
                 } else if (count1 == 0 || count1 < 4) {
                     ImageView v1 = new ImageView(getApplication());
