@@ -6,26 +6,25 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity {
+
+    ArrayList<Integer> arrayOfInstructions = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //FrameLayout dragArea = (FrameLayout)findViewById(R.id.dragArea);
         setContentView(R.layout.activity_main);
 
-        findViewById(R.id.imageToDrop1).setOnTouchListener(new MyTouchListener(R.drawable.ic_launcher));
-        findViewById(R.id.imageToDrop2).setOnTouchListener(new MyTouchListener(R.drawable.ic_launcher_red));
-        findViewById(R.id.imageToDrop3).setOnTouchListener(new MyTouchListener(R.drawable.ic_launcher_blue));
-        findViewById(R.id.imageToDrop4).setOnTouchListener(new MyTouchListener(R.drawable.ic_launcher_purple));
-
-
-        //findViewById(R.id.dragArea).setOnDragListener(new MyDragListener());
-
+        findViewById(R.id.imageToDrop1).setOnTouchListener(new MyTouchListener(R.drawable.ic_launcher, 1));
+        findViewById(R.id.imageToDrop2).setOnTouchListener(new MyTouchListener(R.drawable.ic_launcher_red, 2));
+        findViewById(R.id.imageToDrop3).setOnTouchListener(new MyTouchListener(R.drawable.ic_launcher_blue, 3));
+        findViewById(R.id.imageToDrop4).setOnTouchListener(new MyTouchListener(R.drawable.ic_launcher_purple, 4));
+        findViewById(R.id.playButton).setOnTouchListener(new MyTouchListener(R.drawable.ic_play_arrow_black_24dp, 5));
     }
 
     @Override
@@ -51,18 +50,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public class MyTouchListener implements View.OnTouchListener {
-
         private int resource;
+        private int id;
 
-        //private int count = 0;
-
-        public MyTouchListener(int resource) {
+        public MyTouchListener(int resource, int id) {
             this.resource = resource;
+            this.id = id;
         }
+
         @Override
         public boolean onTouch(View view, MotionEvent motionEvent) {
-            //count++;
-            LinearLayout dragArea = (LinearLayout)findViewById(R.id.dragArea);
+
+            LinearLayout dragArea = (LinearLayout) findViewById(R.id.dragArea);
             LinearLayout linha1 = (LinearLayout) dragArea.findViewById(R.id.linha1);
             int count1 = linha1.getChildCount();
             LinearLayout linha2 = (LinearLayout) dragArea.findViewById(R.id.linha2);
@@ -72,41 +71,41 @@ public class MainActivity extends AppCompatActivity {
             LinearLayout linha4 = (LinearLayout) dragArea.findViewById(R.id.linha4);
             int count4 = linha4.getChildCount();
             if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
-                if (count1 == 0 || count1 < 4) {
+                if (id == 5) {
+                    for (int i = 0; i < arrayOfInstructions.size(); i++) {
+                        System.out.println(arrayOfInstructions.get(i));
+                    }
+                } else if (count1 == 0 || count1 < 4) {
                     ImageView v1 = new ImageView(getApplication());
                     v1.setImageResource(resource);
                     linha1.addView(v1);
-                    //count++;
+                    arrayOfInstructions.add(id);
                     return true;
-                }
-                else if (count2 == 0 || count2 < 4){
+                } else if (count2 == 0 || count2 < 4) {
                     ImageView v1 = new ImageView(getApplication());
                     v1.setImageResource(resource);
+                    arrayOfInstructions.add(id);
                     linha2.addView(v1);
-                    //count++;
                     return true;
-                }
-                else if (count3 == 0 || count3 < 4){
+                } else if (count3 == 0 || count3 < 4) {
                     ImageView v1 = new ImageView(getApplication());
                     v1.setImageResource(resource);
+                    arrayOfInstructions.add(id);
                     linha3.addView(v1);
-                    //count++;
                     return true;
-                }
-                else if (count4 == 0 || count4 < 4){
+                } else if (count4 == 0 || count4 < 4) {
                     ImageView v1 = new ImageView(getApplication());
                     v1.setImageResource(resource);
+                    arrayOfInstructions.add(id);
                     linha4.addView(v1);
-                    //count++;
                     return true;
                 }
-                //count++;
             } else return false;
 
 
-            //count++;
             return false;
         }
 
     }
+
 }
