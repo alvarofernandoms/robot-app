@@ -1,4 +1,4 @@
-package com.br.robot_app_2;
+package com.br.robot_app;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;

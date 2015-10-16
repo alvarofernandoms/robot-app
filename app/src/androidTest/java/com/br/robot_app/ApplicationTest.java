@@ -1,4 +1,4 @@
-package com.br.robot_app_2;
+package com.br.robot_app;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;
