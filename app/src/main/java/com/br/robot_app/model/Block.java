@@ -11,9 +11,11 @@ import java.util.List;
  */
 public class Block{
 
+    private int blockId;
     private JSONObject instructions;
 
-    public Block(){
+    public Block(int id){
+        this.blockId = id;
         this.instructions = new JSONObject();
     }
 
@@ -25,6 +27,7 @@ public class Block{
     public JSONObject getInstructions(){
         return this.instructions;
     }
+    public int getBlockId(){ return this.blockId; }
 
     /**
      * TODO: change the 2 parameters to receve only 1
@@ -37,8 +40,8 @@ public class Block{
     public void addingInstruction(String function, List<String> params, List<String> values) throws JSONException {
         int numParam = params.size();
         LinkedHashMap hashParam = new LinkedHashMap();
-        for(int i=0; i<numParam ; i++)
-            hashParam.put(params.get(i),values.get(i));
+        for (int i = 0; i < numParam; i++)
+            hashParam.put(params.get(i), values.get(i));
         instructions.put(function, hashParam);
     }
 }
