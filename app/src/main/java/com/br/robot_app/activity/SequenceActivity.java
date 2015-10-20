@@ -3,7 +3,12 @@ package com.br.robot_app.activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnTouchListener;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.br.robot_app.R;
 import com.br.robot_app.connect.Connector;
@@ -24,26 +29,27 @@ public class SequenceActivity extends AppCompatActivity {
     private Sequence newSequence;
     private List<Block> blockTypes;
 
+    private final int MOVE_BLOCK = 0; // TODO: check if this is going to be a move forward block
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_main);
+        // Setting up the view and elements
+        setContentView(R.layout.sequence_screen);
         newSequence = new Sequence();
         defaultBlocks();
+
+        // Getting touch elements
+        findViewById(R.id.imageToDrop1).setOnTouchListener(new BlockListener(R.drawable.ic_launcher,MOVE_BLOCK));
+        findViewById(R.id.playButton).setOnTouchListener(new PlayListener());
     }
 
-    public void onClickBlock(View view){
-        // create something like
-        // int blockId = view.findViewById()
-        Block newBlock = getBlockById(0);
-        newSequence.insertBlock(newBlock);
-    }
-
-    public void onClickPLay(View view){
-        sendSequenceFile(view.getContext());
-    }
-
+    /**
+     * Player button. Execute the file tranfer from the app to the robot
+     *
+     * @param context
+     */
     private void sendSequenceFile(Context context){
         Connector conn = Connector.getConnector();
         newSequence.buildJSON(context);
@@ -63,7 +69,7 @@ public class SequenceActivity extends AppCompatActivity {
      * TODO: transform the hard code to get from a api
      */
     private void defaultBlocks(){
-        Block newBlock = new Block();
+        Block newBlock = new Block(MOVE_BLOCK);
         List<String> values = new ArrayList<String>();
         List<String> params = new ArrayList<String>();
 
@@ -77,6 +83,53 @@ public class SequenceActivity extends AppCompatActivity {
             newBlock.addingInstruction("moveForward",params,values);
         } catch (JSONException e) {
             e.printStackTrace();
+        }
+    }
+
+    /**
+     *
+     */
+    private class BlockListener implements OnTouchListener {
+
+        private int blockViewId;
+        private int viewResource;
+
+        public BlockListener(int blockId, int viewResource){
+            this.blockViewId = blockId;
+            this.viewResource = viewResource;
+        }
+
+        @Override
+        public boolean onTouch(View v, MotionEvent event){
+
+            boolean actionResult = false;
+            LinearLayout dragArea = (LinearLayout) findViewById(R.id.dragArea);
+            LinearLayout line = (LinearLayout) dragArea.findViewById(R.id.linha1);
+
+            if(event.getAction() == MotionEvent.ACTION_DOWN){
+                ImageView viewBlock = new ImageView(getApplication());
+                Block blockResource = getBlockById(viewResource);
+
+                viewBlock.setImageResource(blockResource.getBlockId());
+                line.addView(viewBlock);
+                newSequence.insertBlock(blockResource);
+                actionResult = true;
+            }
+
+            return actionResult;
+        }
+    }
+
+    /**
+     *
+     */
+    private class PlayListener implements OnTouchListener{
+
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            boolean actionResult = false;
+            sendSequenceFile(v.getContext());
+            return actionResult;
         }
     }
 }
