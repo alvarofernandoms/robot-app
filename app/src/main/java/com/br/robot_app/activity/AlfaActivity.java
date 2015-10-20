@@ -5,9 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
-import com.br.robot_app.MainActivity;
 import com.br.robot_app.R;
-import com.br.robot_app.model.Sequence;
 
 /**
  * Responsible for the connection all apps functionalities
@@ -28,7 +26,7 @@ public class AlfaActivity extends AppCompatActivity {
     }
 
     public void sequenceScreen(View view){
-        Intent startActivity = new Intent(getApplicationContext(), MainActivity.class);
+        Intent startActivity = new Intent(getApplicationContext(), SequenceActivity.class);
         startActivity(startActivity);
     }
 }

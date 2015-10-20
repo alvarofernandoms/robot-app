@@ -1,4 +1,4 @@
-package com.br.robot_app;
+package com.br.robot_app.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -9,6 +9,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+
+import com.br.robot_app.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -24,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.sequence_screen);
 
         findViewById(R.id.imageToDrop1).setOnTouchListener(new MyTouchListener(R.drawable.ic_launcher, 1));
         findViewById(R.id.imageToDrop2).setOnTouchListener(new MyTouchListener(R.drawable.ic_launcher_red, 2));
