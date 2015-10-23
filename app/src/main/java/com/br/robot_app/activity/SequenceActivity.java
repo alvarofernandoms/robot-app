@@ -37,11 +37,12 @@ public class SequenceActivity extends AppCompatActivity {
 
         // Setting up the view and elements
         setContentView(R.layout.sequence_screen);
-        newSequence = new Sequence();
+        blockTypes = new ArrayList<Block>();
+        newSequence = new Sequence(getBaseContext());
         defaultBlocks();
 
         // Getting touch elements
-        findViewById(R.id.imageToDrop1).setOnTouchListener(new BlockListener(R.drawable.ic_launcher,MOVE_BLOCK));
+        findViewById(R.id.imageToDrop1).setOnTouchListener(new BlockListener(R.drawable.ic_launcher));
         findViewById(R.id.playButton).setOnTouchListener(new PlayListener());
     }
 
@@ -84,6 +85,7 @@ public class SequenceActivity extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        blockTypes.add(newBlock);
     }
 
     /**
@@ -91,11 +93,9 @@ public class SequenceActivity extends AppCompatActivity {
      */
     private class BlockListener implements OnTouchListener {
 
-        private int blockViewId;
         private int viewResource;
 
-        public BlockListener(int blockId, int viewResource){
-            this.blockViewId = blockId;
+        public BlockListener(int viewResource){
             this.viewResource = viewResource;
         }
 
@@ -108,14 +108,14 @@ public class SequenceActivity extends AppCompatActivity {
 
             if(event.getAction() == MotionEvent.ACTION_DOWN){
                 ImageView viewBlock = new ImageView(getApplication());
-                Block blockResource = getBlockById(viewResource);
+                Block blockResource = getBlockById(MOVE_BLOCK);
 
-                viewBlock.setImageResource(blockResource.getBlockId());
+                viewBlock.setImageResource(viewResource);
                 line.addView(viewBlock);
+
                 newSequence.insertBlock(blockResource);
                 actionResult = true;
             }
-
             return actionResult;
         }
     }
@@ -124,11 +124,12 @@ public class SequenceActivity extends AppCompatActivity {
      *
      */
     private class PlayListener implements OnTouchListener{
-
         @Override
         public boolean onTouch(View v, MotionEvent event) {
             boolean actionResult = false;
+
             sendSequenceFile(v.getContext());
+            Log.d("Play Listener", String.valueOf(newSequence.getSequence()));
             return actionResult;
         }
     }
