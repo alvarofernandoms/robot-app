@@ -2,11 +2,13 @@ package com.br.robot_app.model;
 
 import android.content.Context;
 import android.os.Environment;
+import android.util.Log;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,8 +22,9 @@ public class Sequence {
 
     private final String FILENAME = "instruction.json";
 
-    public Sequence(){
-        sequenceFile = new File(Environment.DIRECTORY_DOCUMENTS,FILENAME);
+    public Sequence(Context context){
+        blocks = new ArrayList<Block>();
+        sequenceFile = new File(context.getFilesDir(),FILENAME);
     }
 
     /**
@@ -29,13 +32,14 @@ public class Sequence {
      * @param context app context
      */
     public void buildJSON(Context context){
+        FileOutputStream out;
         try {
-            FileOutputStream out = context.openFileOutput(FILENAME, Context.MODE_PRIVATE);
+            out = context.openFileOutput(FILENAME, Context.MODE_PRIVATE);
             for(Block block : blocks){
                 String instruction = block.getInstructions().toString();
                 out.write(instruction.getBytes());
-                out.close();
             }
+            out.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -61,4 +65,13 @@ public class Sequence {
     public void insertBlock(Block newBlock){
         blocks.add(newBlock);
     }
+
+    /**
+     *
+     * @return
+     */
+    public int totalBlock(){
+        return blocks.size();
+    }
+
 }
