@@ -12,7 +12,6 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 
 /**
- * Created by paulo on 16/10/15.
  */
 public class Connector {
 
@@ -20,12 +19,11 @@ public class Connector {
 
     private Socket mainSocket = new Socket();
     private final int SERVERPORT = 7394;
-    private final String SERVER_IP = "10.5.5.1";
+    private final String SERVER_IP = "10.0.0.1";
 
     private ClientThread client;
 
     private Connector(){
-        Log.d("Connector: ", " connecting...");
         client = new ClientThread();
         new Thread(client).start(); // Thread to connect to the server
     }
@@ -60,7 +58,6 @@ public class Connector {
     private class ClientThread implements Runnable{
         @Override
         public void run() {
-            Log.d("Running: ","running...");
             try{
                 InetAddress serverAddr = InetAddress.getByName(SERVER_IP);
                 mainSocket = new Socket(serverAddr, SERVERPORT);
