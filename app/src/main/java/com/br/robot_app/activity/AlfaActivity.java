@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.br.robot_app.R;
+import com.br.robot_app.connect.Connector;
 
 /**
  * Responsible for the connection all apps functionalities
@@ -15,6 +16,7 @@ public class AlfaActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.alfa_main);
+        Connector conn = Connector.getConnector();
     }
 
     /**

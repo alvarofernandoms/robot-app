@@ -26,8 +26,6 @@ public class WifiConnection extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.connection);
-
-        Connector conn = Connector.getConnector();
     }
 
     public void setWifiList(){
