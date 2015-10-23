@@ -9,18 +9,20 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
+import java.net.SocketException;
 import java.net.UnknownHostException;
 
 /**
  */
 public class Connector {
 
-    public static Connector objConnector = null;
-
-    private Socket mainSocket = new Socket();
     private final int SERVERPORT = 7394;
     private final String SERVER_IP = "10.0.0.1";
+    private final int RETRY_IN = 3000;
 
+    public static Connector objConnector = null;
+
+    private Socket mainSocket;
     private ClientThread client;
 
     private Connector(){
@@ -49,13 +51,23 @@ public class Connector {
             // Sending the file
             output.write(byteArray,0,byteArray.length);
             output.flush();
-
         }catch (IOException e){
             e.printStackTrace();
         }
     }
 
+    /**
+     * TODO: isConnected is aways tru if the first connection succeed
+     * @return
+     */
+    public boolean isAlfaAwake(){
+        boolean result = false;
+        result = mainSocket.isConnected();
+        return result;
+    }
+
     private class ClientThread implements Runnable{
+
         @Override
         public void run() {
             try{
