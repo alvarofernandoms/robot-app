@@ -78,8 +78,8 @@
         </TableRow>
     </TableLayout>
 
-    <LinearLayout
-        android:id="@+id/dragArea"
+    <ScrollView
+        android:id="@+id/scrollview"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dialog_fixed_width_major"
         android:layout_below="@+id/tableLayout"
@@ -87,14 +87,22 @@
         android:layout_alignStart="@+id/tableLayout"
         android:orientation="vertical" >
 
-    </LinearLayout>
+        <LinearLayout
+            android:id="@+id/dragArea"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </LinearLayout>
+
+    </ScrollView>
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/dragArea"
-        android:layout_alignLeft="@+id/dragArea"
-        android:layout_alignStart="@+id/dragArea">
+        android:layout_below="@+id/scrollview"
+        android:layout_alignLeft="@+id/scrollview"
+        android:layout_alignStart="@+id/scrollview">
 
         <ImageView
             android:id="@+id/playButton"

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
@@ -108,6 +109,7 @@ public class SequenceActivity extends AppCompatActivity {
 
             // Setting the new linear layout
             LinearLayout new_line = new LinearLayout(v.getContext());
+            new_line.setGravity(Gravity.CENTER_HORIZONTAL);
             dragArea.addView(new_line);
 
             if(event.getAction() == MotionEvent.ACTION_DOWN){
