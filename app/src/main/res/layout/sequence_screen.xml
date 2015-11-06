@@ -79,41 +79,13 @@
     </TableLayout>
 
     <LinearLayout
+        android:id="@+id/dragArea"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dialog_fixed_width_major"
         android:layout_below="@+id/tableLayout"
         android:layout_alignLeft="@+id/tableLayout"
         android:layout_alignStart="@+id/tableLayout"
-        android:id="@+id/dragArea"
         android:orientation="vertical" >
-
-        <LinearLayout
-            android:id="@+id/linha1"
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="80dp">
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/linha2"
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="80dp">
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/linha3"
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="80dp">
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/linha4"
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="80dp">
-        </LinearLayout>
 
     </LinearLayout>
 

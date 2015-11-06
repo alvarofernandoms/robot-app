@@ -31,9 +31,6 @@
         <!-- Sequence Program Screen-->
         <activity android:name=".activity.SequenceActivity"/>
 
-        <!-- TODO: set this to the sequence activity -->
-        <activity android:name=".activity.MainActivity"/>
-
     </application>
 
 </manifest>

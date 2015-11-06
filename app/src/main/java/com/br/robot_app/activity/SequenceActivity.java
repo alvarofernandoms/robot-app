@@ -89,7 +89,7 @@ public class SequenceActivity extends AppCompatActivity {
     }
 
     /**
-     *
+     * Listener inerclass for blocks
      */
     private class BlockListener implements OnTouchListener {
 
@@ -104,14 +104,18 @@ public class SequenceActivity extends AppCompatActivity {
 
             boolean actionResult = false;
             LinearLayout dragArea = (LinearLayout) findViewById(R.id.dragArea);
-            LinearLayout line = (LinearLayout) dragArea.findViewById(R.id.linha1);
+//            LinearLayout line = (LinearLayout) dragArea.findViewById(R.id.linha1);
+
+            // Setting the new linear layout
+            LinearLayout new_line = new LinearLayout(v.getContext());
+            dragArea.addView(new_line);
 
             if(event.getAction() == MotionEvent.ACTION_DOWN){
                 ImageView viewBlock = new ImageView(getApplication());
                 Block blockResource = getBlockById(MOVE_BLOCK);
 
                 viewBlock.setImageResource(viewResource);
-                line.addView(viewBlock);
+                new_line.addView(viewBlock);
 
                 newSequence.insertBlock(blockResource);
                 actionResult = true;
@@ -121,7 +125,7 @@ public class SequenceActivity extends AppCompatActivity {
     }
 
     /**
-     *
+     * Listener inerclass for Play button
      */
     private class PlayListener implements OnTouchListener{
         @Override
