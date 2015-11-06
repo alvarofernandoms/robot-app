@@ -24,7 +24,7 @@ public class Sequence {
 
     public Sequence(Context context){
         blocks = new ArrayList<Block>();
-        sequenceFile = new File(context.getFilesDir(),FILENAME);
+        sequenceFile = new File(context.getFilesDir(), FILENAME);
     }
 
     /**
@@ -35,10 +35,20 @@ public class Sequence {
         FileOutputStream out;
         try {
             out = context.openFileOutput(FILENAME, Context.MODE_PRIVATE);
-            for(Block block : blocks){
+            // TODO: the var with flag fixJSONBuild should be removed and add a improvement way to fix JSONbuild
+            out.write("{".getBytes()); // fixJSONBuild
+            int count = 0;
+            for(Block block : blocks) {
                 String instruction = block.getInstructions().toString();
+                instruction = instruction.substring(1); // fixJSONBuild
+                instruction = instruction.substring(0,instruction.length()-1); // fixJSONBuild
+                count++;
+                if(blocks.size() != count){
+                    instruction = instruction + ",";
+                }
                 out.write(instruction.getBytes());
             }
+            out.write("}".getBytes()); // fixJSONBuild
             out.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
