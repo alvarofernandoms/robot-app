@@ -11,11 +11,9 @@ import java.util.List;
  */
 public class Block{
 
-    private int blockId;
     private JSONObject instructions;
 
-    public Block(int id){
-        this.blockId = id;
+    public Block(){
         this.instructions = new JSONObject();
     }
 
@@ -27,7 +25,6 @@ public class Block{
     public JSONObject getInstructions(){
         return this.instructions;
     }
-    public int getBlockId(){ return this.blockId; }
 
     /**
      * TODO: change the 2 parameters to receve only 1
