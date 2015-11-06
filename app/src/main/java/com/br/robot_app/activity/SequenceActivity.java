@@ -44,6 +44,9 @@ public class SequenceActivity extends AppCompatActivity {
 
         // Getting touch elements
         findViewById(R.id.imageToDrop1).setOnTouchListener(new BlockListener(R.drawable.ic_launcher));
+        findViewById(R.id.imageToDrop2).setOnTouchListener(new BlockListener(R.drawable.ic_launcher_red));
+        findViewById(R.id.imageToDrop3).setOnTouchListener(new BlockListener(R.drawable.ic_launcher_blue));
+        findViewById(R.id.imageToDrop4).setOnTouchListener(new BlockListener(R.drawable.ic_launcher_purple));
         findViewById(R.id.playButton).setOnTouchListener(new PlayListener());
     }
 
