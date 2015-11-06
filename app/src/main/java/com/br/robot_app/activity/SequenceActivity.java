@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.View.OnTouchListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 
 import com.br.robot_app.R;
 import com.br.robot_app.connect.Connector;
@@ -108,7 +109,9 @@ public class SequenceActivity extends AppCompatActivity {
 
             boolean actionResult = false;
             LinearLayout dragArea = (LinearLayout) findViewById(R.id.dragArea);
-//            LinearLayout line = (LinearLayout) dragArea.findViewById(R.id.linha1);
+
+            ScrollView sv = (ScrollView)findViewById(R.id.scrollview);
+            sv.scrollTo(0, sv.getBottom());
 
             // Setting the new linear layout
             LinearLayout new_line = new LinearLayout(v.getContext());
