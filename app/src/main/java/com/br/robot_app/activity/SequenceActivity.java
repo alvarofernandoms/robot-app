@@ -19,6 +19,11 @@ import com.br.robot_app.model.Sequence;
 
 import org.json.JSONException;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,7 +36,17 @@ public class SequenceActivity extends AppCompatActivity {
     private Sequence newSequence;
     private List<Block> blockTypes;
 
-    private final int MOVE_BLOCK = 0; // TODO: check if this is going to be a move forward block
+    // TODO: check if this is going to be id of the blocks
+    private final int MOVE_BLOCK = 0;
+    private final int TURN_BLOCK = 1;
+    private final int LOOP_BLOCK = 2;
+
+    // Main images of the screen
+    private final int MOVE_IMG = R.id.moveButton;
+    private final int TURN_IMG = R.id.turnButton;
+    private final int LOOP_IMG = R.id.loopButton;
+    private final int PLAY_IMG = R.id.playButton;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -44,11 +59,10 @@ public class SequenceActivity extends AppCompatActivity {
         defaultBlocks();
 
         // Getting touch elements
-        findViewById(R.id.imageToDrop1).setOnTouchListener(new BlockListener(R.drawable.ic_launcher));
-        findViewById(R.id.imageToDrop2).setOnTouchListener(new BlockListener(R.drawable.ic_launcher_red));
-        findViewById(R.id.imageToDrop3).setOnTouchListener(new BlockListener(R.drawable.ic_launcher_blue));
-        findViewById(R.id.imageToDrop4).setOnTouchListener(new BlockListener(R.drawable.ic_launcher_purple));
-        findViewById(R.id.playButton).setOnTouchListener(new PlayListener());
+        findViewById(MOVE_IMG).setOnTouchListener(new BlockListener(R.drawable.ic_launcher));
+        findViewById(TURN_IMG).setOnTouchListener(new BlockListener(R.drawable.ic_launcher_red));
+        findViewById(LOOP_IMG).setOnTouchListener(new BlockListener(R.drawable.ic_launcher_blue));
+        findViewById(PLAY_IMG).setOnTouchListener(new PlayListener());
     }
 
     /**
@@ -59,6 +73,19 @@ public class SequenceActivity extends AppCompatActivity {
     private void sendSequenceFile(Context context){
         Connector conn = Connector.getConnector();
         newSequence.buildJSON(context);
+
+        // TODO: for debug! exclude this
+        File file = newSequence.getSequence();
+        try{
+            BufferedReader reader = new BufferedReader(new FileReader(file));
+            Log.d("JSON",reader.readLine());
+            reader.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         conn.sender(newSequence.getSequence());
     }
 
@@ -68,29 +95,52 @@ public class SequenceActivity extends AppCompatActivity {
      * @return the block that is on blockTypes
      */
     public Block getBlockById(int blockId){
-        return blockTypes.get(blockId);
+        Block result = blockTypes.get(blockId);
+        return result;
     }
 
     /**
      * TODO: transform the hard code to get from a api
      */
     private void defaultBlocks(){
-        Block newBlock = new Block(MOVE_BLOCK);
-        List<String> values = new ArrayList<String>();
-        List<String> params = new ArrayList<String>();
+        Block moveBlock = new Block();
+        Block turnBlock = new Block();
+        Block loopBlock = new Block();
 
-        params.add("duration");
-        params.add("power");
+        // MOVE
+        List<String> movevalues = new ArrayList<String>();
+        List<String> moveparams = new ArrayList<String>();
+        moveparams.add("duration");
+        moveparams.add("power");
+        moveparams.add("direction");
+        movevalues.add("1");
+        movevalues.add("100");
+        movevalues.add("forward");
 
-        values.add("1");
-        values.add("100");
+        // TURN
+        List<String> turnvalues = new ArrayList<String>();
+        List<String> turnparams = new ArrayList<String>();
+        turnparams.add("degree");
+        turnparams.add("direction");
+        turnvalues.add("90");
+        turnvalues.add("right");
+
+        // LOOP
+        List<String> loopvalues = new ArrayList<String>();
+        List<String> loopparams = new ArrayList<String>();
+        loopparams.add("qnt");
+        loopvalues.add("3");
 
         try{
-            newBlock.addingInstruction("moveForward",params,values);
+            moveBlock.addingInstruction("move",moveparams,movevalues);
+            turnBlock.addingInstruction("turn",turnparams,turnvalues);
+            loopBlock.addingInstruction("loop",loopparams,loopvalues);
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        blockTypes.add(newBlock);
+        blockTypes.add(moveBlock);
+        blockTypes.add(turnBlock);
+        blockTypes.add(loopBlock);
     }
 
     /**
@@ -104,12 +154,14 @@ public class SequenceActivity extends AppCompatActivity {
             this.viewResource = viewResource;
         }
 
+        // TODO: modularize!
         @Override
         public boolean onTouch(View v, MotionEvent event){
 
             boolean actionResult = false;
             LinearLayout dragArea = (LinearLayout) findViewById(R.id.dragArea);
 
+            // Set screen to the bottom of the scroll
             ScrollView sv = (ScrollView)findViewById(R.id.scrollview);
             sv.scrollTo(0, sv.getBottom());
 
@@ -119,8 +171,24 @@ public class SequenceActivity extends AppCompatActivity {
             dragArea.addView(new_line);
 
             if(event.getAction() == MotionEvent.ACTION_DOWN){
+
+                // Define which bock to set
+                int currentId = v.getId();
+                int blockId = 0;
+                switch (currentId){
+                    case MOVE_IMG:
+                        blockId = MOVE_BLOCK;
+                        break;
+                    case TURN_IMG:
+                        blockId = TURN_BLOCK;
+                        break;
+                    case LOOP_IMG:
+                        blockId = LOOP_BLOCK;
+                        break;
+                }
+
                 ImageView viewBlock = new ImageView(getApplication());
-                Block blockResource = getBlockById(MOVE_BLOCK);
+                Block blockResource = getBlockById(blockId);
 
                 viewBlock.setImageResource(viewResource);
                 new_line.addView(viewBlock);
@@ -139,9 +207,10 @@ public class SequenceActivity extends AppCompatActivity {
         @Override
         public boolean onTouch(View v, MotionEvent event) {
             boolean actionResult = false;
-
             sendSequenceFile(v.getContext());
             Log.d("Play Listener", String.valueOf(newSequence.getSequence()));
+
+
             return actionResult;
         }
     }
