@@ -16,7 +16,10 @@ public class AlfaActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.alfa_main);
+
+        // Initialize the connection with the server
         Connector conn = Connector.getConnector();
+        conn.connectToAlfa();
     }
 
     /**
