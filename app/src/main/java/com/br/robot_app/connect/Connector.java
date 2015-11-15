@@ -56,6 +56,7 @@ public class Connector {
             // Sending the file
             output.write(byteArray,0,byteArray.length);
             output.flush();
+            output.close();
         }catch (IOException e){
             e.printStackTrace();
         }

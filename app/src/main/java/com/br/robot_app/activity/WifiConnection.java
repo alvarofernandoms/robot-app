@@ -1,41 +1,37 @@
 package com.br.robot_app.activity;
 
-import android.net.wifi.ScanResult;
-import android.net.wifi.WifiManager;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.ArrayAdapter;
-import android.widget.ListAdapter;
-import android.widget.ListView;
+import android.view.View;
+import android.widget.ImageView;
 
 import com.br.robot_app.R;
 import com.br.robot_app.connect.Connector;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
- * Responsable for all connection with the server side
+ * TODO: this class maybe tmp because the status of the connection must be visible thought the app
  */
 public class WifiConnection extends AppCompatActivity {
 
-    private WifiManager wifiManager;
-    private List<String> connections = new ArrayList<String>();
+    private final int STATUS_IMG = R.id.status_img;
+
+    private final int ON_IMG = R.drawable.conn_status_on;
+    private final int OFF_IMG = R.drawable.conn_status_off;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.connection);
+        setContentView(R.layout.status);
     }
 
-    public void setWifiList(){
-        List<ScanResult> wifiList = wifiManager.getScanResults();
-        for(int i=0; i<wifiList.size(); i++)
-            connections.add(wifiList.get(i).SSID);
+    public void showStatus(View view) {
+        Connector conn = Connector.getConnector();
+        boolean status = conn.getConnectionStatus();
 
-        int listType = android.R.layout.simple_list_item_1;
-        ListAdapter wifiListAdapter = new ArrayAdapter<String>(this,listType,connections);
-        ListView wifiListView = (ListView)findViewById(R.id.wifi_list);
-        wifiListView.setAdapter(wifiListAdapter);
+        ImageView statusImage = (ImageView) findViewById(STATUS_IMG);
+        if(status){statusImage.setImageResource(ON_IMG);}
+        else{statusImage.setImageResource(OFF_IMG);}
     }
+
 }
