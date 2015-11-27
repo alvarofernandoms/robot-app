@@ -7,6 +7,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.io.PrintWriter;
+import java.net.ConnectException;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.SocketException;
@@ -18,17 +20,15 @@ public class Connector {
 
     private final int SERVERPORT = 7394;
     private final String SERVER_IP = "10.0.0.1";
-    private final int RETRY_IN = 3000;
+    private final int RETRY_IN = 5000;
 
     public static Connector objConnector = null;
 
     private Socket mainSocket;
     private ClientThread client;
+    private boolean connectionStatus;
 
-    private Connector(){
-        client = new ClientThread();
-        new Thread(client).start(); // Thread to connect to the server
-    }
+    private Connector(){}
 
     public static Connector getConnector(){
         if (objConnector == null) {
@@ -37,6 +37,11 @@ public class Connector {
             // Nothing
         }
         return objConnector;
+    }
+
+    public void connectToAlfa(){
+        client = new ClientThread();
+        new Thread(client).start(); // Thread to connect to the server
     }
 
     public void sender(File program){
@@ -51,32 +56,54 @@ public class Connector {
             // Sending the file
             output.write(byteArray,0,byteArray.length);
             output.flush();
+            output.close();
         }catch (IOException e){
             e.printStackTrace();
         }
     }
 
-    /**
-     * TODO: isConnected is aways tru if the first connection succeed
-     * @return
-     */
-    public boolean isAlfaAwake(){
-        boolean result = false;
-        result = mainSocket.isConnected();
-        return result;
+    public boolean getConnectionStatus(){
+        if (mainSocket != null) {
+            connectionStatus = mainSocket.isConnected() && ! mainSocket.isClosed();
+        }
+        return this.connectionStatus;
     }
 
     private class ClientThread implements Runnable{
-
         @Override
         public void run() {
-            try{
-                InetAddress serverAddr = InetAddress.getByName(SERVER_IP);
-                mainSocket = new Socket(serverAddr, SERVERPORT);
-            } catch (UnknownHostException e) {
-                Log.d("Unknown Host: ", e.getMessage());
-            } catch (IOException e) {
-                Log.d("IOException: ", e.getMessage());
+            while(true){
+                try{
+                    InetAddress serverAddr = InetAddress.getByName(SERVER_IP);
+                    mainSocket = new Socket(serverAddr, SERVERPORT);
+                } catch (UnknownHostException e) {
+                    Log.d("Unknown Host: ", e.getMessage());
+                    retryIn();
+                } catch (ConnectException e) {
+                    Log.d("ConnectException: ", e.getMessage());
+                    closeSocket();
+                    retryIn();
+                } catch (IOException e) {
+                    Log.d("IOException: ", e.getMessage());
+                    retryIn();
+                }
+            }
+        }
+
+        private void closeSocket() {
+            if(mainSocket != null){
+                try {
+                    mainSocket.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        private void retryIn(){
+            try {
+                Thread.sleep(RETRY_IN);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
         }
     }
