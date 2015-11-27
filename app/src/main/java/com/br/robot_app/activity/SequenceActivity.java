@@ -36,6 +36,9 @@ public class SequenceActivity extends AppCompatActivity {
     private Sequence newSequence;
     private List<Block> blockTypes;
 
+    List<Integer> listOfBlocks = new ArrayList<>();
+    Integer interator = 0;
+
     // TODO: check if this is going to be id of the blocks
     private final int MOVE_BLOCK = 0;
     private final int TURN_BLOCK = 1;
@@ -70,15 +73,15 @@ public class SequenceActivity extends AppCompatActivity {
      *
      * @param context
      */
-    private void sendSequenceFile(Context context){
+    private void sendSequenceFile(Context context) {
         Connector conn = Connector.getConnector();
         newSequence.buildJSON(context);
 
         // TODO: for debug! exclude this
         File file = newSequence.getSequence();
-        try{
+        try {
             BufferedReader reader = new BufferedReader(new FileReader(file));
-            Log.d("JSON",reader.readLine());
+            Log.d("JSON", reader.readLine());
             reader.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -90,11 +93,10 @@ public class SequenceActivity extends AppCompatActivity {
     }
 
     /**
-     *
      * @param blockId represent the id of the block on view
      * @return the block that is on blockTypes
      */
-    public Block getBlockById(int blockId){
+    public Block getBlockById(int blockId) {
         Block result = blockTypes.get(blockId);
         return result;
     }
@@ -102,7 +104,7 @@ public class SequenceActivity extends AppCompatActivity {
     /**
      * TODO: transform the hard code to get from a api
      */
-    private void defaultBlocks(){
+    private void defaultBlocks() {
         Block moveBlock = new Block();
         Block turnBlock = new Block();
         Block loopBlock = new Block();
@@ -131,10 +133,10 @@ public class SequenceActivity extends AppCompatActivity {
         loopparams.add("qnt");
         loopvalues.add("3");
 
-        try{
-            moveBlock.addingInstruction("move",moveparams,movevalues);
-            turnBlock.addingInstruction("turn",turnparams,turnvalues);
-            loopBlock.addingInstruction("loop",loopparams,loopvalues);
+        try {
+            moveBlock.addingInstruction("move", moveparams, movevalues);
+            turnBlock.addingInstruction("turn", turnparams, turnvalues);
+            loopBlock.addingInstruction("loop", loopparams, loopvalues);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -150,19 +152,19 @@ public class SequenceActivity extends AppCompatActivity {
 
         private int viewResource;
 
-        public BlockListener(int viewResource){
+        public BlockListener(int viewResource) {
             this.viewResource = viewResource;
         }
 
         // TODO: modularize!
         @Override
-        public boolean onTouch(View v, MotionEvent event){
+        public boolean onTouch(View v, MotionEvent event) {
 
             boolean actionResult = false;
             LinearLayout dragArea = (LinearLayout) findViewById(R.id.dragArea);
 
             // Set screen to the bottom of the scroll
-            ScrollView sv = (ScrollView)findViewById(R.id.scrollview);
+            ScrollView sv = (ScrollView) findViewById(R.id.scrollview);
             sv.scrollTo(0, sv.getBottom());
 
             // Setting the new linear layout
@@ -170,12 +172,12 @@ public class SequenceActivity extends AppCompatActivity {
             new_line.setGravity(Gravity.CENTER_HORIZONTAL);
             dragArea.addView(new_line);
 
-            if(event.getAction() == MotionEvent.ACTION_DOWN){
+            if (event.getAction() == MotionEvent.ACTION_DOWN) {
 
                 // Define which bock to set
                 int currentId = v.getId();
                 int blockId = 0;
-                switch (currentId){
+                switch (currentId) {
                     case MOVE_IMG:
                         blockId = MOVE_BLOCK;
                         break;
@@ -188,22 +190,58 @@ public class SequenceActivity extends AppCompatActivity {
                 }
 
                 ImageView viewBlock = new ImageView(getApplication());
+                viewBlock.setId(interator++);
                 Block blockResource = getBlockById(blockId);
 
                 viewBlock.setImageResource(viewResource);
                 new_line.addView(viewBlock);
 
+                viewBlock.setOnTouchListener(new RemoveBlockListener());
+
+                listOfBlocks.add(viewBlock.getId());
+
+                // findViewById(viewBlock.getId()).setOnTouchListener(new RemoveBlockListener());
+
+
                 newSequence.insertBlock(blockResource);
                 actionResult = true;
+
+                for (int i = 0; i < listOfBlocks.size(); i++) {
+                    System.out.println(listOfBlocks.get(i));
+                }
+                System.out.println("----------------------");
             }
             return actionResult;
+        }
+    }
+
+    /* Romove block  */
+
+    private class RemoveBlockListener implements OnTouchListener {
+
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+
+            // TODO: another ACTION to consider the scroll moviment
+            if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                // TODO: lines to remove the ImageView
+//                View remove = (View) getParent();
+//                ImageView viewBlock = new ImageView(getApplication());
+//                LinearLayout delete_line = new LinearLayout(v.getContext());
+//
+//                delete_line.removeAllViews();
+
+                Log.d("Debug>>>>>>>>>>>>>>>>>>>", "bloco na lista!");
+            }
+            return false;
+
         }
     }
 
     /**
      * Listener inerclass for Play button
      */
-    private class PlayListener implements OnTouchListener{
+    private class PlayListener implements OnTouchListener {
         @Override
         public boolean onTouch(View v, MotionEvent event) {
             boolean actionResult = false;
