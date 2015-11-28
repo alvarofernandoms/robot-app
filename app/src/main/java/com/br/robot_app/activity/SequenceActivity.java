@@ -8,6 +8,7 @@ import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
@@ -231,8 +232,16 @@ public class SequenceActivity extends AppCompatActivity {
 //
 //                delete_line.removeAllViews();
 
+                View destroy_line = findViewById(v.getId());
+                ((ViewGroup) destroy_line.getParent()).removeView(destroy_line);
+
+
+                Log.d("Parent's view >>>>>>>>>>>>>>", String.valueOf(v.getId()));
+
                 Log.d("Debug>>>>>>>>>>>>>>>>>>>", "bloco na lista!");
+
             }
+            // listOfBlocks.remove(v.getId());
             return false;
 
         }
