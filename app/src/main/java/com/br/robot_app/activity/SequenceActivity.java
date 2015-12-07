@@ -37,13 +37,17 @@ public class SequenceActivity extends AppCompatActivity {
     private Sequence newSequence;
     private List<Block> blockTypes;
 
-    List<Integer> listOfBlocks = new ArrayList<>();
+    List<String> listOfBlocks = new ArrayList<String>();
+    List<Integer> listOfSequence = new ArrayList<>();
     Integer interator = 0;
 
     // TODO: check if this is going to be id of the blocks
     private final int MOVE_BLOCK = 0;
     private final int TURN_BLOCK = 1;
     private final int LOOP_BLOCK = 2;
+
+    private final int BLOCK_TO_IMG = 0;
+    private final int IMG_TO_BLOCK = 1;
 
     // Main images of the screen
     private final int MOVE_IMG = R.id.moveButton;
@@ -119,6 +123,8 @@ public class SequenceActivity extends AppCompatActivity {
         movevalues.add("1");
         movevalues.add("100");
         movevalues.add("forward");
+        moveBlock.idImgBlock = convertId(getCurrentFocus(), IMG_TO_BLOCK);
+        System.out.println(moveBlock.idImgBlock);
 
         // TURN
         List<String> turnvalues = new ArrayList<String>();
@@ -127,6 +133,7 @@ public class SequenceActivity extends AppCompatActivity {
         turnparams.add("direction");
         turnvalues.add("90");
         turnvalues.add("right");
+
 
         // LOOP
         List<String> loopvalues = new ArrayList<String>();
@@ -144,6 +151,38 @@ public class SequenceActivity extends AppCompatActivity {
         blockTypes.add(moveBlock);
         blockTypes.add(turnBlock);
         blockTypes.add(loopBlock);
+    }
+
+    private int convertId(View v, int type){
+        // Define which bock to set
+        int currentId = v.getId();
+        int id = 0;
+        if(type == IMG_TO_BLOCK){
+            switch (currentId) {
+                case MOVE_IMG:
+                    id = MOVE_BLOCK;
+                    break;
+                case TURN_IMG:
+                    id = TURN_BLOCK;
+                    break;
+                case LOOP_IMG:
+                    id = LOOP_BLOCK;
+                    break;
+            }
+        }else if(type == BLOCK_TO_IMG) {
+            switch (currentId) {
+                case MOVE_BLOCK:
+                    id = MOVE_IMG;
+                    break;
+                case TURN_BLOCK:
+                    id = TURN_IMG;
+                    break;
+                case LOOP_BLOCK:
+                    id = LOOP_IMG;
+                    break;
+            }
+        }
+        return id;
     }
 
     /**
@@ -175,20 +214,7 @@ public class SequenceActivity extends AppCompatActivity {
 
             if (event.getAction() == MotionEvent.ACTION_DOWN) {
 
-                // Define which bock to set
-                int currentId = v.getId();
-                int blockId = 0;
-                switch (currentId) {
-                    case MOVE_IMG:
-                        blockId = MOVE_BLOCK;
-                        break;
-                    case TURN_IMG:
-                        blockId = TURN_BLOCK;
-                        break;
-                    case LOOP_IMG:
-                        blockId = LOOP_BLOCK;
-                        break;
-                }
+                int blockId = convertId(v,IMG_TO_BLOCK);
 
                 ImageView viewBlock = new ImageView(getApplication());
                 viewBlock.setId(interator++);
@@ -196,19 +222,16 @@ public class SequenceActivity extends AppCompatActivity {
 
                 viewBlock.setImageResource(viewResource);
                 new_line.addView(viewBlock);
+                viewBlock.setOnTouchListener(new RemoveBlockListener(viewResource));
 
-                viewBlock.setOnTouchListener(new RemoveBlockListener());
-
-                listOfBlocks.add(viewBlock.getId());
-
+                listOfBlocks.add(String.valueOf(viewBlock.getId()));
                 // findViewById(viewBlock.getId()).setOnTouchListener(new RemoveBlockListener());
-
 
                 newSequence.insertBlock(blockResource);
                 actionResult = true;
 
                 for (int i = 0; i < listOfBlocks.size(); i++) {
-                    System.out.println(listOfBlocks.get(i));
+                    System.out.println(viewResource);
                 }
                 System.out.println("----------------------");
             }
@@ -220,28 +243,32 @@ public class SequenceActivity extends AppCompatActivity {
 
     private class RemoveBlockListener implements OnTouchListener {
 
+        private int viewResource;
+
+        public RemoveBlockListener(int viewResource) {
+            this.viewResource = viewResource;
+        }
+
         @Override
         public boolean onTouch(View v, MotionEvent event) {
 
             // TODO: another ACTION to consider the scroll moviment
             if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                // TODO: lines to remove the ImageView
-//                View remove = (View) getParent();
-//                ImageView viewBlock = new ImageView(getApplication());
-//                LinearLayout delete_line = new LinearLayout(v.getContext());
-//
-//                delete_line.removeAllViews();
 
                 View destroy_line = findViewById(v.getId());
                 ((ViewGroup) destroy_line.getParent()).removeView(destroy_line);
 
-
                 Log.d("Parent's view >>>>>>>>>>>>>>", String.valueOf(v.getId()));
-
                 Log.d("Debug>>>>>>>>>>>>>>>>>>>", "bloco na lista!");
 
+                listOfBlocks.remove(String.valueOf(v.getId()));
+
+                for (int i = 0; i < listOfBlocks.size(); i++) {
+                    System.out.println(listOfBlocks.get(i));
+                }
+                System.out.println("----------na remoçao------------");
+
             }
-            // listOfBlocks.remove(v.getId());
             return false;
 
         }
@@ -256,8 +283,6 @@ public class SequenceActivity extends AppCompatActivity {
             boolean actionResult = false;
             sendSequenceFile(v.getContext());
             Log.d("Play Listener", String.valueOf(newSequence.getSequence()));
-
-
             return actionResult;
         }
     }

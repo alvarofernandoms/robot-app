@@ -11,6 +11,7 @@ import java.util.List;
  */
 public class Block{
 
+    public int idImgBlock;
     private JSONObject instructions;
 
     public Block(){
