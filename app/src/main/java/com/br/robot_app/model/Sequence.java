@@ -76,12 +76,4 @@ public class Sequence {
         blocks.add(newBlock);
     }
 
-    /**
-     *
-     * @return
-     */
-    public int totalBlock(){
-        return blocks.size();
-    }
-
 }
