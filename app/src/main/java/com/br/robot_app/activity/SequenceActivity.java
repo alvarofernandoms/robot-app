@@ -1,8 +1,11 @@
 package com.br.robot_app.activity;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
@@ -62,6 +65,7 @@ public class SequenceActivity extends AppCompatActivity {
     private final int LOOP_IMG = R.id.loopButton;
     private final int LOOP_IMG2 = R.id.loop;
     private final int PLAY_IMG = R.id.playButton;
+    private final int SAVE_IMG = R.id.saveButton;
 
 
     @Override
@@ -87,6 +91,7 @@ public class SequenceActivity extends AppCompatActivity {
         findViewById(CONDITION).setOnTouchListener(new BlockListener(R.mipmap.ic_condition));
         findViewById(LOOP_IMG2).setOnTouchListener(new BlockListener(R.mipmap.ic_loop));
         findViewById(PLAY_IMG).setOnTouchListener(new PlayListener());
+        findViewById(SAVE_IMG).setOnTouchListener(new SaveListener());
     }
 
     /**
@@ -295,9 +300,24 @@ public class SequenceActivity extends AppCompatActivity {
         @Override
         public boolean onTouch(View v, MotionEvent event) {
             boolean actionResult = false;
-            sendSequenceFile(v.getContext());
-            Log.d("Play Listener", String.valueOf(newSequence.getSequence()));
+            if(event.getAction() == MotionEvent.ACTION_DOWN){
+                sendSequenceFile(v.getContext());
+                Log.d("Play Listener", String.valueOf(newSequence.getSequence()));
+                actionResult = true;
+            }
             return actionResult;
         }
     }
+    private class SaveListener implements OnTouchListener{
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            boolean actionResult = false;
+            if(event.getAction() == MotionEvent.ACTION_DOWN){
+                startActivity(new Intent(getApplicationContext(), PopupFormActivity.class));
+                Log.d("SAVE","...");
+            }
+            return false;
+        }
+    }
+
 }

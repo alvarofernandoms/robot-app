@@ -28,15 +28,14 @@ public class Sequence {
     public Sequence(Context context){
         blocks = new ArrayList<Block>();
         isSaved = false;
-        createFile(context);
     }
 
     /**
      * Create a file with a interator from AlfaActivity static var
      * @param context to define the dir path
      */
-    private void createFile(Context context){
-        fileName = "instruction" + AlfaActivity.numberOfSequence + ".json";
+    public void createFile(Context context, String progName){
+        fileName = progName;
         sequenceFile = new File(context.getFilesDir(), fileName);
         try {
             sequenceFile.createNewFile();
@@ -45,7 +44,6 @@ public class Sequence {
         }
         Log.d("Path:", String.valueOf(context.getFilesDir()));
         Log.d("File:", fileName);
-        printFiles(context);
     }
 
     // TODO: this is just to debug. Remove this later
