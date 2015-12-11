@@ -4,6 +4,8 @@ import android.content.Context;
 import android.os.Environment;
 import android.util.Log;
 
+import com.br.robot_app.activity.AlfaActivity;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -20,11 +22,44 @@ public class Sequence {
     private List<Block> blocks; // The sequence_screen of instructions
     private File sequenceFile;
 
-    private final String FILENAME = "instruction.json";
+    public String fileName;
+    public boolean isSaved;
 
     public Sequence(Context context){
         blocks = new ArrayList<Block>();
-        sequenceFile = new File(context.getFilesDir(), FILENAME);
+        isSaved = false;
+        createFile(context);
+    }
+
+    /**
+     * Create a file with a interator from AlfaActivity static var
+     * @param context to define the dir path
+     */
+    private void createFile(Context context){
+        fileName = "instruction" + AlfaActivity.numberOfSequence + ".json";
+        sequenceFile = new File(context.getFilesDir(), fileName);
+        try {
+            sequenceFile.createNewFile();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Log.d("Path:", String.valueOf(context.getFilesDir()));
+        Log.d("File:", fileName);
+        printFiles(context);
+    }
+
+    // TODO: this is just to debug. Remove this later
+    private void printFiles(Context context){
+        File folder = new File(String.valueOf(context.getFilesDir()));
+        File[] listOfFiles = folder.listFiles();
+
+        for (int i = 0; i < listOfFiles.length; i++) {
+            if (listOfFiles[i].isFile()) {
+                System.out.println("File " + listOfFiles[i].getName());
+            } else if (listOfFiles[i].isDirectory()) {
+                System.out.println("Directory " + listOfFiles[i].getName());
+            }
+        }
     }
 
     /**
@@ -34,7 +69,7 @@ public class Sequence {
     public void buildJSON(Context context){
         FileOutputStream out;
         try {
-            out = context.openFileOutput(FILENAME, Context.MODE_PRIVATE);
+            out = context.openFileOutput(fileName, Context.MODE_PRIVATE);
             // TODO: the var with flag fixJSONBuild should be removed and add a improvement way to fix JSONbuild
             out.write("{".getBytes()); // fixJSONBuild
             int count = 0;
@@ -75,5 +110,4 @@ public class Sequence {
     public void insertBlock(Block newBlock){
         blocks.add(newBlock);
     }
-
 }
