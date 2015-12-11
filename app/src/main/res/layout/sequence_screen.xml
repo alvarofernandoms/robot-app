@@ -3,17 +3,56 @@
     android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".MainActivity">
+    android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".MainActivity"
+    android:background="@drawable/bg80">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="240dp"
+        android:id="@+id/imageView3"
+        android:background="#b9dde5e7"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentEnd="true" />
+
+    <ImageView
+        android:layout_width="5dp"
+        android:layout_height="100dp"
+        android:id="@+id/grayBar1"
+        android:background="#a9a2aa"
+        android:layout_above="@+id/frameLayout"
+        android:layout_toLeftOf="@+id/blankInput"
+        android:layout_alignTop="@+id/scrollview" />
+
+    <ImageView
+        android:layout_width="5dp"
+        android:layout_height="100dp"
+        android:id="@+id/grayBar2"
+        android:background="#a9a2aa"
+        android:layout_above="@+id/frameLayout"
+        android:layout_toRightOf="@+id/blankInput"
+        android:layout_alignTop="@+id/scrollview" />
+
+    <ImageView
+        android:layout_width="90dp"
+        android:layout_height="100dp"
+        android:id="@+id/blankInput"
+        android:background="#ffffff"
+        android:layout_alignBottom="@+id/scrollview"
+        android:layout_alignTop="@+id/scrollview"
+        android:layout_alignParentEnd="false"
+        android:layout_alignParentStart="false"
+        android:layout_centerInParent="true" />
 
     <TableLayout
         android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
+        android:layout_height="240dp"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:id="@+id/tableLayout">
+        android:id="@+id/tableLayout"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
 
         <TableRow
             android:layout_width="match_parent"
@@ -24,29 +63,12 @@
                 android:orientation="horizontal"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
-                android:layout_column="0">
-
+                android:layout_column="1">
                 <ImageView
                     android:id="@+id/moveButton"
                     android:layout_width="80dp"
                     android:layout_height="80dp"
                     android:src="@mipmap/ic_launcher" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:layout_column="1">
-
-                <ImageView
-                    android:id="@+id/turnButton"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:src="@mipmap/ic_launcher_red" />
-
-
             </LinearLayout>
 
             <LinearLayout
@@ -54,50 +76,195 @@
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:layout_column="2">
+                <ImageView
+                    android:id="@+id/turnButton"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:src="@mipmap/ic_launcher_red" />
+            </LinearLayout>
 
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_column="3">
                 <ImageView
                     android:id="@+id/loopButton"
                     android:layout_width="80dp"
                     android:layout_height="80dp"
                     android:src="@mipmap/ic_launcher_blue" />
-
             </LinearLayout>
 
         </TableRow>
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_column="1"
+                android:layout_gravity="center">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:id="@+id/move_forward"
+                    android:background="@mipmap/ic_move_forward" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_column="2"
+                android:layout_gravity="center">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:id="@+id/move_backward"
+                    android:background="@mipmap/ic_move_backward" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_column="3"
+                android:layout_gravity="center">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:id="@+id/move_right"
+                    android:background="@mipmap/ic_move_right"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_column="4"
+                android:layout_gravity="center">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:id="@+id/move_left"
+                    android:background="@mipmap/ic_move_left" />
+            </LinearLayout>
+
+        </TableRow>
+
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_column="1"
+                android:layout_gravity="center">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:id="@+id/move_stop"
+                    android:background="@mipmap/ic_move_stop" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_column="2"
+                android:layout_gravity="center">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:id="@+id/move_spin"
+                    android:background="@mipmap/ic_move_spin" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_column="3"
+                android:layout_gravity="center">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:id="@+id/condition"
+                    android:background="@mipmap/ic_condition" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_column="4"
+                android:layout_gravity="center">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:id="@+id/loop"
+                    android:background="@mipmap/ic_loop" />
+            </LinearLayout>
+
+        </TableRow>
+
+
     </TableLayout>
 
     <ScrollView
         android:id="@+id/scrollview"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dialog_fixed_width_major"
+        android:layout_height="100dp"
         android:layout_below="@+id/tableLayout"
         android:layout_alignLeft="@+id/tableLayout"
         android:layout_alignStart="@+id/tableLayout"
-        android:orientation="vertical" >
+        android:orientation="vertical"
+        android:layout_above="@+id/frameLayout">
 
         <LinearLayout
             android:id="@+id/dragArea"
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-
         </LinearLayout>
 
     </ScrollView>
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/scrollview"
-        android:layout_alignLeft="@+id/scrollview"
-        android:layout_alignStart="@+id/scrollview">
-
+        android:layout_height="65dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/frameLayout"
+        android:background="#b9dde5e7">
         <ImageView
             android:id="@+id/playButton"
             android:layout_width="80dp"
             android:layout_height="80dp"
-            android:src="@mipmap/ic_play_arrow_black_24dp"
-            android:layout_gravity="center" />
+            android:src="@drawable/carro"
+            android:layout_gravity="center|right" />
+
+        <ImageView
+            android:id="@+id/saveButton"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:background="@mipmap/ic_save"
+            android:layout_gravity="center|left" />
 
     </FrameLayout>
 

@@ -50,9 +50,17 @@ public class SequenceActivity extends AppCompatActivity {
     private final int IMG_TO_BLOCK = 1;
 
     // Main images of the screen
+    private final int MOVE_FORWARD = R.id.move_forward;
+    private final int MOVE_BACKWARD = R.id.move_backward;
+    private final int MOVE_RIGHT = R.id.move_right;
+    private final int MOVE_LEFT = R.id.move_left;
+    private final int MOVE_STOP = R.id.move_stop;
+    private final int MOVE_SPIN = R.id.move_spin;
+    private final int CONDITION = R.id.condition;
     private final int MOVE_IMG = R.id.moveButton;
     private final int TURN_IMG = R.id.turnButton;
     private final int LOOP_IMG = R.id.loopButton;
+    private final int LOOP_IMG2 = R.id.loop;
     private final int PLAY_IMG = R.id.playButton;
 
 
@@ -70,6 +78,14 @@ public class SequenceActivity extends AppCompatActivity {
         findViewById(MOVE_IMG).setOnTouchListener(new BlockListener(R.drawable.ic_launcher));
         findViewById(TURN_IMG).setOnTouchListener(new BlockListener(R.drawable.ic_launcher_red));
         findViewById(LOOP_IMG).setOnTouchListener(new BlockListener(R.drawable.ic_launcher_blue));
+        findViewById(MOVE_FORWARD).setOnTouchListener(new BlockListener(R.mipmap.ic_move_forward));
+        findViewById(MOVE_BACKWARD).setOnTouchListener(new BlockListener(R.mipmap.ic_move_backward));
+        findViewById(MOVE_RIGHT).setOnTouchListener(new BlockListener(R.mipmap.ic_move_right));
+        findViewById(MOVE_LEFT).setOnTouchListener(new BlockListener(R.mipmap.ic_move_left));
+        findViewById(MOVE_STOP).setOnTouchListener(new BlockListener(R.mipmap.ic_move_stop));
+        findViewById(MOVE_SPIN).setOnTouchListener(new BlockListener(R.mipmap.ic_move_spin));
+        findViewById(CONDITION).setOnTouchListener(new BlockListener(R.mipmap.ic_condition));
+        findViewById(LOOP_IMG2).setOnTouchListener(new BlockListener(R.mipmap.ic_loop));
         findViewById(PLAY_IMG).setOnTouchListener(new PlayListener());
     }
 
@@ -123,8 +139,6 @@ public class SequenceActivity extends AppCompatActivity {
         movevalues.add("1");
         movevalues.add("100");
         movevalues.add("forward");
-        moveBlock.idImgBlock = convertId(getCurrentFocus(), IMG_TO_BLOCK);
-        System.out.println(moveBlock.idImgBlock);
 
         // TURN
         List<String> turnvalues = new ArrayList<String>();
