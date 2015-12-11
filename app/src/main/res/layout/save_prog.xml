@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Insira o nome do Programa"
+        android:layout_margin="16dp"
+        android:id="@+id/prog_dialog"
+        android:textSize="20dp" />
+
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/prog_text"
+        android:layout_below="@+id/prog_dialog"
+        android:layout_alignRight="@+id/prog_dialog"
+        android:layout_alignEnd="@+id/prog_dialog"
+        android:layout_toRightOf="@+id/cancelButton"
+        android:layout_alignLeft="@+id/saveButton"
+        android:layout_alignStart="@+id/saveButton" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Salvar"
+        android:id="@+id/saveButton"
+        android:layout_below="@+id/prog_text"
+        android:layout_alignLeft="@+id/prog_dialog" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cancelar"
+        android:id="@+id/cancelButton"
+        android:layout_below="@+id/prog_text"
+        android:layout_toRightOf="@+id/saveButton"
+        android:layout_gravity="center_horizontal" />
+
+
+</RelativeLayout>

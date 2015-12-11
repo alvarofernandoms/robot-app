@@ -34,7 +34,7 @@ public class Sequence {
      * Create a file with a interator from AlfaActivity static var
      * @param context to define the dir path
      */
-    public void createFile(Context context, String progName){
+    public void saveFile(Context context, String progName){
         fileName = progName;
         sequenceFile = new File(context.getFilesDir(), fileName);
         try {

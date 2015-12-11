@@ -1,20 +1,30 @@
 package com.br.robot_app.activity;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.DialogFragment;
+import android.app.FragmentManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Matrix;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
+import android.widget.Toast;
 
 import com.br.robot_app.R;
 import com.br.robot_app.connect.Connector;
@@ -308,15 +318,57 @@ public class SequenceActivity extends AppCompatActivity {
             return actionResult;
         }
     }
+
+    /**
+     * Listener inerclass for Save button
+     */
     private class SaveListener implements OnTouchListener{
         @Override
         public boolean onTouch(View v, MotionEvent event) {
             boolean actionResult = false;
             if(event.getAction() == MotionEvent.ACTION_DOWN){
+                FragmentManager manager = getFragmentManager();
+                ProgSaveDialog popup = new ProgSaveDialog();
+                popup.show(manager,"Dialog");
                 Log.d("SAVE","...");
             }
             return false;
         }
     }
 
+    private class ProgSaveDialog extends DialogFragment implements View.OnClickListener {
+
+        private Button save;
+        private Button cancel;
+        private EditText progName;
+
+        @Nullable
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+            View dialog = inflater.inflate(R.layout.save_prog,null);
+            progName = (EditText) findViewById(R.id.prog_text);
+            save = (Button) findViewById(R.id.saveButton);
+            cancel = (Button) findViewById(R.id.cancelButton);
+
+            //save.setOnClickListener(this);
+            cancel.setOnClickListener(this);
+
+            setCancelable(false);
+            return dialog;
+        }
+
+        @Override
+        public void onClick(View v) {
+            if(v.getId() == R.id.saveButton) {
+                newSequence.saveFile(getContext(), progName.getText().toString());
+                Log.d("Saving...", progName.getText().toString());
+                Toast.makeText(getActivity(), "Programa Salvo!", Toast.LENGTH_LONG).show();
+                dismiss();
+            } else {
+                Log.d("Cancel...","");
+                dismiss();
+            }
+        }
+    }
 }
