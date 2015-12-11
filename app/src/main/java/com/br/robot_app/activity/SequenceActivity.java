@@ -313,7 +313,6 @@ public class SequenceActivity extends AppCompatActivity {
         public boolean onTouch(View v, MotionEvent event) {
             boolean actionResult = false;
             if(event.getAction() == MotionEvent.ACTION_DOWN){
-                startActivity(new Intent(getApplicationContext(), PopupFormActivity.class));
                 Log.d("SAVE","...");
             }
             return false;
