@@ -14,7 +14,8 @@
 
         <!-- Splash Screen -->
         <activity
-            android:name=".activity.SplashActivity">
+            android:name=".activity.SplashActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -22,13 +23,22 @@
         </activity>
 
         <!-- Main Alfa Screen -->
-        <activity android:name=".activity.AlfaActivity"/>
+        <activity
+            android:name=".activity.AlfaActivity"
+            android:screenOrientation="portrait">
+        </activity>
 
         <!-- WifiConnection Management Screen-->
-        <activity android:name=".activity.WifiConnection"/>
+        <activity
+            android:name=".activity.WifiConnection"
+            android:screenOrientation="portrait">
+        </activity>
 
         <!-- Sequence Program Screen-->
-        <activity android:name=".activity.SequenceActivity"/>
+        <activity
+            android:name=".activity.SequenceActivity"
+            android:screenOrientation="portrait">
+        </activity>
 
     </application>
 
