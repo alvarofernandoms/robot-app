@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <EditText
+        android:id="@+id/prog_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_below="@+id/prog_dialog"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:layout_alignRight="@+id/cancel_button_dialog"
+        android:layout_alignEnd="@+id/cancel_button_dialog"
+        android:layout_alignLeft="@+id/save_button_dialog"
+        android:layout_alignStart="@+id/save_button_dialog" />
+
+    <Button
+        android:id="@+id/save_button_dialog"
+        android:text="Salvar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_marginLeft="16dp"
+        android:layout_below="@+id/prog_text"
+        android:layout_alignLeft="@+id/prog_dialog" />
+
+    <Button
+        android:id="@+id/cancel_button_dialog"
+        android:text="Cancelar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_below="@+id/prog_text"
+        android:layout_toRightOf="@+id/save_button_dialog"
+        android:layout_gravity="center_horizontal" />
+
+</RelativeLayout>

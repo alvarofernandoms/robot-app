@@ -12,6 +12,9 @@ import com.br.robot_app.connect.Connector;
  * Responsible for the connection all apps functionalities
  */
 public class AlfaActivity extends AppCompatActivity {
+
+    public static int numberOfSequence; // Bad practice of static global
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -20,6 +23,9 @@ public class AlfaActivity extends AppCompatActivity {
         // Initialize the connection with the server
         Connector conn = Connector.getConnector();
         conn.connectToAlfa();
+
+        // Initialize the amount of sequence
+        numberOfSequence = 0;
     }
 
     /**
@@ -32,6 +38,13 @@ public class AlfaActivity extends AppCompatActivity {
 
     public void sequenceScreen(View view){
         Intent startActivity = new Intent(getApplicationContext(), SequenceActivity.class);
+        startActivity(startActivity);
+        numberOfSequence++;
+    }
+
+
+    public void programListScreen(View view){
+        Intent startActivity = new Intent(getApplicationContext(), ProgramListActivity.class);
         startActivity(startActivity);
     }
 }

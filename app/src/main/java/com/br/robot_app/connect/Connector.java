@@ -30,6 +30,10 @@ public class Connector {
 
     private Connector(){}
 
+    /**
+     * Singleton to make only one instance of Connector
+     * @return the only instance of Connector
+     */
     public static Connector getConnector(){
         if (objConnector == null) {
             objConnector = new Connector();
@@ -39,11 +43,18 @@ public class Connector {
         return objConnector;
     }
 
+    /**
+     * Start a connection with Alfa
+     */
     public void connectToAlfa(){
         client = new ClientThread();
         new Thread(client).start(); // Thread to connect to the server
     }
 
+    /**
+     * This send the program file to the Alfa thought socket
+     * @param program The json program to send to Alfa
+     */
     public void sender(File program){
         try{
             // Preparing to send
@@ -62,6 +73,11 @@ public class Connector {
         }
     }
 
+    /**
+     * Verify the connection to Alfa thought the wifi
+     * This is used to connection retry
+     * @return the status of the connection based on socket connection
+     */
     public boolean getConnectionStatus(){
         if (mainSocket != null) {
             connectionStatus = mainSocket.isConnected() && ! mainSocket.isClosed();
@@ -69,6 +85,10 @@ public class Connector {
         return this.connectionStatus;
     }
 
+    /**
+     * Iner class to create a Thread to create a connection with the socket
+     *      defined on Alfa server
+     */
     private class ClientThread implements Runnable{
         @Override
         public void run() {
@@ -90,6 +110,9 @@ public class Connector {
             }
         }
 
+        /**
+         * Close socket connection
+         */
         private void closeSocket() {
             if(mainSocket != null){
                 try {
@@ -99,6 +122,10 @@ public class Connector {
                 }
             }
         }
+
+        /**
+         * Retry connection to the server
+         */
         private void retryIn(){
             try {
                 Thread.sleep(RETRY_IN);

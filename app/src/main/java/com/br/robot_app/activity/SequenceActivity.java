@@ -1,17 +1,24 @@
 package com.br.robot_app.activity;
 
+import android.app.DialogFragment;
+import android.app.FragmentManager;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
+import android.widget.Toast;
 
 import com.br.robot_app.R;
 import com.br.robot_app.connect.Connector;
@@ -62,6 +69,7 @@ public class SequenceActivity extends AppCompatActivity {
     private final int LOOP_IMG = R.id.loopButton;
     private final int LOOP_IMG2 = R.id.loop;
     private final int PLAY_IMG = R.id.playButton;
+    private final int SAVE_IMG = R.id.saveButton;
 
 
     @Override
@@ -70,6 +78,7 @@ public class SequenceActivity extends AppCompatActivity {
 
         // Setting up the view and elements
         setContentView(R.layout.sequence_screen);
+
         blockTypes = new ArrayList<Block>();
         newSequence = new Sequence(getBaseContext());
         defaultBlocks();
@@ -87,6 +96,7 @@ public class SequenceActivity extends AppCompatActivity {
         findViewById(CONDITION).setOnTouchListener(new BlockListener(R.mipmap.ic_condition));
         findViewById(LOOP_IMG2).setOnTouchListener(new BlockListener(R.mipmap.ic_loop));
         findViewById(PLAY_IMG).setOnTouchListener(new PlayListener());
+        findViewById(SAVE_IMG).setOnTouchListener(new SaveListener());
     }
 
     /**
@@ -295,9 +305,68 @@ public class SequenceActivity extends AppCompatActivity {
         @Override
         public boolean onTouch(View v, MotionEvent event) {
             boolean actionResult = false;
-            sendSequenceFile(v.getContext());
-            Log.d("Play Listener", String.valueOf(newSequence.getSequence()));
+            if(event.getAction() == MotionEvent.ACTION_DOWN){
+                sendSequenceFile(v.getContext());
+                Log.d("Play Listener", String.valueOf(newSequence.getSequence()));
+                actionResult = true;
+            }
             return actionResult;
+        }
+    }
+
+    /**
+     * Listener inerclass for Save button
+     */
+    private class SaveListener implements OnTouchListener{
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            boolean actionResult = false;
+            if(event.getAction() == MotionEvent.ACTION_DOWN){
+                FragmentManager manager = getFragmentManager();
+                ProgSaveDialog popup = new ProgSaveDialog();
+                popup.show(manager, "Dialog");
+            }
+            return false;
+        }
+    }
+
+    private class ProgSaveDialog extends DialogFragment implements View.OnClickListener {
+
+        private Button save;
+        private Button cancel;
+        private EditText progName;
+
+        @Nullable
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+            View dialog = inflater.inflate(R.layout.save_prog,null);
+            getDialog().setTitle("Nome do Programa...");
+
+            progName = (EditText) dialog.findViewById(R.id.prog_text);
+
+            save = (Button) dialog.findViewById(R.id.save_button_dialog);
+            cancel = (Button) dialog.findViewById(R.id.cancel_button_dialog);
+
+            save.setOnClickListener(this);
+            cancel.setOnClickListener(this);
+
+            setCancelable(false);
+            return dialog;
+        }
+
+        @Override
+        public void onClick(View v) {
+            if(v.getId() == R.id.save_button_dialog) {
+                String name = progName.getText().toString();
+                newSequence.saveFile(v.getContext(), name);
+                newSequence.printFiles(v.getContext());
+                Log.d("Saving...", name);
+                Toast.makeText(getActivity(), "Programa Salvo!", Toast.LENGTH_LONG).show();
+                dismiss();
+            } else {
+                Log.d("Cancel...","");
+                dismiss();
+            }
         }
     }
 }
