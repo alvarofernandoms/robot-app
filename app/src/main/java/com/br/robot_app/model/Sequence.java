@@ -38,6 +38,7 @@ public class Sequence {
      * @param context to define the dir path
      */
     public void saveFile(Context context, String progName){
+        sequenceFile = new File(context.getFilesDir(), progName);
         try {
             sequenceFile.createNewFile();
         } catch (IOException e) {
@@ -47,19 +48,8 @@ public class Sequence {
         Log.d("File:", fileName);
     }
 
-    private void getLastProgramName(Context context){
-        File folder = new File(String.valueOf(context.getFilesDir()));
-        File[] listOfFiles = folder.listFiles();
-        int lastProgram = 0;
-        for(int i = 0; i<listOfFiles.length ; i++){
-            if(listOfFiles[i].isFile()){
-            }
-        }
-
-    }
-
     // TODO: this is just to debug. Remove this later
-    private void printFiles(Context context){
+    public void printFiles(Context context){
         File folder = new File(String.valueOf(context.getFilesDir()));
         File[] listOfFiles = folder.listFiles();
 

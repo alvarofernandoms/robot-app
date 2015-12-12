@@ -324,8 +324,7 @@ public class SequenceActivity extends AppCompatActivity {
             if(event.getAction() == MotionEvent.ACTION_DOWN){
                 FragmentManager manager = getFragmentManager();
                 ProgSaveDialog popup = new ProgSaveDialog();
-                popup.show(manager,"Dialog");
-                Log.d("SAVE","...");
+                popup.show(manager, "Dialog");
             }
             return false;
         }
@@ -342,7 +341,7 @@ public class SequenceActivity extends AppCompatActivity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             View dialog = inflater.inflate(R.layout.save_prog,null);
 
-            progName = (EditText) findViewById(R.id.prog_text);
+            progName = (EditText) dialog.findViewById(R.id.prog_text);
 
             save = (Button) dialog.findViewById(R.id.save_button_dialog);
             cancel = (Button) dialog.findViewById(R.id.cancel_button_dialog);
@@ -356,9 +355,11 @@ public class SequenceActivity extends AppCompatActivity {
 
         @Override
         public void onClick(View v) {
-            if(v.getId() == R.id.saveButton) {
-                newSequence.saveFile(getContext(), progName.getText().toString());
-                Log.d("Saving...", progName.getText().toString());
+            if(v.getId() == R.id.save_button_dialog) {
+                String name = progName.getText().toString();
+                newSequence.saveFile(v.getContext(), name);
+                newSequence.printFiles(v.getContext());
+                Log.d("Saving...", name);
                 Toast.makeText(getActivity(), "Programa Salvo!", Toast.LENGTH_LONG).show();
                 dismiss();
             } else {
