@@ -28,6 +28,9 @@ public class Sequence {
     public Sequence(Context context){
         blocks = new ArrayList<Block>();
         isSaved = false;
+
+        fileName = "instruction" + AlfaActivity.numberOfSequence + ".json";
+        sequenceFile = new File(context.getFilesDir(), fileName);
     }
 
     /**
@@ -35,8 +38,6 @@ public class Sequence {
      * @param context to define the dir path
      */
     public void saveFile(Context context, String progName){
-        fileName = progName;
-        sequenceFile = new File(context.getFilesDir(), fileName);
         try {
             sequenceFile.createNewFile();
         } catch (IOException e) {
@@ -44,6 +45,17 @@ public class Sequence {
         }
         Log.d("Path:", String.valueOf(context.getFilesDir()));
         Log.d("File:", fileName);
+    }
+
+    private void getLastProgramName(Context context){
+        File folder = new File(String.valueOf(context.getFilesDir()));
+        File[] listOfFiles = folder.listFiles();
+        int lastProgram = 0;
+        for(int i = 0; i<listOfFiles.length ; i++){
+            if(listOfFiles[i].isFile()){
+            }
+        }
+
     }
 
     // TODO: this is just to debug. Remove this later

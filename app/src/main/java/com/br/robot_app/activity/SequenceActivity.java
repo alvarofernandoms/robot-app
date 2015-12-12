@@ -1,17 +1,11 @@
 package com.br.robot_app.activity;
 
-import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.DialogFragment;
 import android.app.FragmentManager;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.graphics.Matrix;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -84,6 +78,7 @@ public class SequenceActivity extends AppCompatActivity {
 
         // Setting up the view and elements
         setContentView(R.layout.sequence_screen);
+
         blockTypes = new ArrayList<Block>();
         newSequence = new Sequence(getBaseContext());
         defaultBlocks();
@@ -345,13 +340,14 @@ public class SequenceActivity extends AppCompatActivity {
         @Nullable
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
             View dialog = inflater.inflate(R.layout.save_prog,null);
-            progName = (EditText) findViewById(R.id.prog_text);
-            save = (Button) findViewById(R.id.saveButton);
-            cancel = (Button) findViewById(R.id.cancelButton);
 
-            //save.setOnClickListener(this);
+            progName = (EditText) findViewById(R.id.prog_text);
+
+            save = (Button) dialog.findViewById(R.id.save_button_dialog);
+            cancel = (Button) dialog.findViewById(R.id.cancel_button_dialog);
+
+            save.setOnClickListener(this);
             cancel.setOnClickListener(this);
 
             setCancelable(false);

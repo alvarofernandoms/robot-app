@@ -5,44 +5,37 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Insira o nome do Programa"
-        android:layout_margin="16dp"
-        android:id="@+id/prog_dialog"
-        android:textSize="20dp" />
-
-
     <EditText
+        android:id="@+id/prog_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/prog_text"
+
         android:layout_below="@+id/prog_dialog"
-        android:layout_alignRight="@+id/prog_dialog"
-        android:layout_alignEnd="@+id/prog_dialog"
-        android:layout_toRightOf="@+id/cancelButton"
-        android:layout_alignLeft="@+id/saveButton"
-        android:layout_alignStart="@+id/saveButton" />
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:layout_alignRight="@+id/cancel_button_dialog"
+        android:layout_alignEnd="@+id/cancel_button_dialog"
+        android:layout_alignLeft="@+id/save_button_dialog"
+        android:layout_alignStart="@+id/save_button_dialog" />
 
     <Button
+        android:id="@+id/save_button_dialog"
+        android:text="Salvar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Salvar"
-        android:id="@+id/saveButton"
+
+        android:layout_marginLeft="16dp"
         android:layout_below="@+id/prog_text"
         android:layout_alignLeft="@+id/prog_dialog" />
 
     <Button
+        android:id="@+id/cancel_button_dialog"
+        android:text="Cancelar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Cancelar"
-        android:id="@+id/cancelButton"
-        android:layout_below="@+id/prog_text"
-        android:layout_toRightOf="@+id/saveButton"
-        android:layout_gravity="center_horizontal" />
 
+        android:layout_below="@+id/prog_text"
+        android:layout_toRightOf="@+id/save_button_dialog"
+        android:layout_gravity="center_horizontal" />
 
 </RelativeLayout>
