@@ -38,6 +38,7 @@ public class Sequence {
      * @param context to define the dir path
      */
     public void saveFile(Context context, String progName){
+        progName = progName + ".json";
         sequenceFile = new File(context.getFilesDir(), progName);
         try {
             sequenceFile.createNewFile();
