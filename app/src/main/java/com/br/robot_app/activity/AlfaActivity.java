@@ -41,4 +41,10 @@ public class AlfaActivity extends AppCompatActivity {
         startActivity(startActivity);
         numberOfSequence++;
     }
+
+
+    public void programListScreen(View view){
+        Intent startActivity = new Intent(getApplicationContext(), ProgramListActivity.class);
+        startActivity(startActivity);
+    }
 }

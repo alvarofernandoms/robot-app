@@ -39,7 +39,8 @@
         android:backgroundTintMode="add"
         android:layout_marginTop="15dp"
         android:layout_below="@+id/sequence_btn"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:onClick="programListScreen"/>
 
     <Button
         android:layout_width="313dp"
@@ -67,6 +68,7 @@
     <ImageView
         android:layout_width="10dp"
         android:layout_height="wrap_content"
+
         android:id="@+id/imageView"
         android:background="@drawable/new_logo"
         android:layout_alignRight="@+id/carIcon"

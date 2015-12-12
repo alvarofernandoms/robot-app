@@ -40,6 +40,9 @@
             android:screenOrientation="portrait">
         </activity>
 
+        <!-- Program List Screen-->
+        <activity android:name=".activity.ProgramListActivity"/>
+
     </application>
 
 </manifest>
