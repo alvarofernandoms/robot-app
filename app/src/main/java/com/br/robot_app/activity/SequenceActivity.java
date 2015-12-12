@@ -340,6 +340,7 @@ public class SequenceActivity extends AppCompatActivity {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             View dialog = inflater.inflate(R.layout.save_prog,null);
+            getDialog().setTitle("Nome do Programa...");
 
             progName = (EditText) dialog.findViewById(R.id.prog_text);
 
