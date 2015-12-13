@@ -11,7 +11,11 @@ import java.util.List;
  */
 public class Block{
 
-    public int idImgBlock;
+    public int blockId;
+    public String function;
+    public List<String> params;
+    public List<String> values;
+
     private JSONObject instructions;
 
     public Block(){
@@ -28,18 +32,30 @@ public class Block{
     }
 
     /**
-     * TODO: change the 2 parameters to receve only 1
      * Adding a new instruction on the block
-     *
-     * @param function name of the function to be executed
-     * @param params list of all parameters of the function
-     * @param values list of all values releted to the params
      */
-    public void addingInstruction(String function, List<String> params, List<String> values) throws JSONException {
+    public void generateInstruction() {
         int numParam = params.size();
         LinkedHashMap hashParam = new LinkedHashMap();
         for (int i = 0; i < numParam; i++)
             hashParam.put(params.get(i), values.get(i));
-        instructions.put(function, hashParam);
+        try {
+            instructions.put(function, hashParam);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * TODO: make a map of param and function
+     * @param function
+     * @param params
+     * @param values
+     */
+    public void setInstruction(String function, List<String> params, List<String> values){
+        this.function = function;
+        this.params = params;
+        this.values = values;
+        generateInstruction();
     }
 }
