@@ -1,14 +1,17 @@
 package com.br.robot_app.model;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Environment;
 import android.util.Log;
 
 import com.br.robot_app.activity.AlfaActivity;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +22,7 @@ import java.util.List;
  */
 public class Sequence {
 
-    private List<Block> blocks; // The sequence_screen of instructions
+    public List<Block> blocks;
     private File sequenceFile;
 
     public String fileName;
@@ -104,11 +107,40 @@ public class Sequence {
     }
 
     /**
+     * TODO: this is just to debug. Remove this later
+     */
+    public void showJSONfile(Context context){
+        buildJSON(context);
+        try(BufferedReader br = new BufferedReader(new FileReader(context.getFilesDir() + "/" + fileName))){
+            String line = null;
+            while((line = br.readLine()) != null){
+                Log.d("Lines: ", line);
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
      * Insert a new instruction block into the sequence
      *
      * @param newBlock new instruction block
      */
     public void insertBlock(Block newBlock){
         blocks.add(newBlock);
+    }
+
+    /**
+     * Remove a especific block from the list of blocks
+     * @param rmId Id of the block to be removed
+     */
+    public void removeBlock(int rmId){
+        ArrayList<Block> toRemove = new ArrayList<Block>();
+        for(Block block : blocks){
+            if(block.blockId == rmId) toRemove.add(block);
+        }
+        blocks.removeAll(toRemove);
     }
 }
