@@ -13,14 +13,14 @@ public class ApiBlock {
 
     public static final int MOVE_FORWARD = 0;
     public static final int MOVE_BACKWARD = 1;
-    public static final int TURN_RIGHT = 3;
-    public static final int TURN_LEFT = 4;
+    public static final int TURN_RIGHT = 2;
+    public static final int TURN_LEFT = 3;
 
-    public static final int STOP = 5;
-    public static final int SPIN = 6;
+    public static final int STOP = 4;
+    public static final int SPIN = 5;
 
-    public static final int CONDITION = 7;
-    public static final int LOOP = 8;
+    public static final int CONDITION = 6;
+    public static final int LOOP = 7;
 
     public static final int BLOCK_TO_IMG = 0; // TODO: from json to sequence
     public static final int IMG_TO_BLOCK = 1;
@@ -35,7 +35,7 @@ public class ApiBlock {
     private static final int SPIN_IMG = R.id.move_spin;
 
     private static final int CONDITION_IMG = R.id.condition;
-    private static final int LOOP_IMG = R.id.loop;
+    private static final int LOOP_IMG = R.id.loop_blk;
 
     public List<Block> blockTypes;
 

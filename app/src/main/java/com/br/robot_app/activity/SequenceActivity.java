@@ -56,7 +56,7 @@ public class SequenceActivity extends AppCompatActivity {
     private final int MOVE_STOP = R.id.move_stop;
     private final int MOVE_SPIN = R.id.move_spin;
     private final int CONDITION = R.id.condition;
-    private final int LOOP_IMG = R.id.loop;
+    private final int LOOP_IMG = R.id.loop_blk;
     private final int PLAY_IMG = R.id.playButton;
     private final int SAVE_IMG = R.id.saveButton;
 
@@ -144,7 +144,7 @@ public class SequenceActivity extends AppCompatActivity {
 
             if (event.getAction() == MotionEvent.ACTION_DOWN) {
 
-                int blockId = api.convertId(v.getId(),ApiBlock.IMG_TO_BLOCK);
+                int blockId = api.convertId(v.getId(), ApiBlock.IMG_TO_BLOCK);
                 Block blockResource = api.getBlockById(blockId);
 
                 ImageView viewBlock = new ImageView(getApplication());
