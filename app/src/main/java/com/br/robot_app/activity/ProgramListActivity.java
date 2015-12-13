@@ -34,6 +34,7 @@ public class ProgramListActivity extends ListActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.programs_screen);
 
         programsName = getAllPrograms();
         adapter = new ArrayAdapter<String>(this,android.R.layout.simple_expandable_list_item_1,programsName);
@@ -54,5 +55,19 @@ public class ProgramListActivity extends ListActivity {
         }
         Log.d("Size", String.valueOf(programs.size()));
         return programs;
+    }
+
+    public void removeAllPrograms(View v){
+        List<String> programs = new ArrayList<String>();
+        Context context = getBaseContext();
+        File folder = new File(String.valueOf(context.getFilesDir()));
+        File[] listOfFiles = folder.listFiles();
+
+        for (int i = 0; i < listOfFiles.length; i++) {
+            if (listOfFiles[i].isFile()) {
+                listOfFiles[i].delete();
+            }
+        }
+        
     }
 }
