@@ -38,6 +38,9 @@
         <activity
             android:name=".activity.SequenceActivity"
             android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.br.robot_app.activity.AlfaActivity" />
         </activity>
 
         <!-- Program List Screen-->
