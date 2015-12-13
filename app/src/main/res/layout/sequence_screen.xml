@@ -8,7 +8,7 @@
 
     <ImageView
         android:layout_width="wrap_content"
-        android:layout_height="240dp"
+        android:layout_height="160dp"
         android:id="@+id/imageView3"
         android:background="#b9dde5e7"
         android:layout_alignParentTop="true"
@@ -46,7 +46,7 @@
 
     <TableLayout
         android:layout_width="match_parent"
-        android:layout_height="240dp"
+        android:layout_height="160dp"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:id="@+id/tableLayout"
@@ -220,13 +220,6 @@
             android:layout_height="80dp"
             android:background="@mipmap/ic_save"
             android:layout_gravity="center|left" />
-
-        <ImageView
-            android:id="@+id/saveButton"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:src="@mipmap/ic_save"
-            android:layout_gravity="left|center_vertical" />
 
     </FrameLayout>
 
