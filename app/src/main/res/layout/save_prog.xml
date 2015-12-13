@@ -9,7 +9,6 @@
         android:id="@+id/prog_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
         android:layout_below="@+id/prog_dialog"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="16dp"
@@ -20,22 +19,33 @@
 
     <Button
         android:id="@+id/save_button_dialog"
-        android:text="Salvar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-
+        android:text=""
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:background="@drawable/icon_confirmar"
         android:layout_marginLeft="16dp"
         android:layout_below="@+id/prog_text"
-        android:layout_alignLeft="@+id/prog_dialog" />
+        android:layout_alignLeft="@+id/prog_dialog"
+        android:paddingBottom="50dp" />
 
     <Button
         android:id="@+id/cancel_button_dialog"
-        android:text="Cancelar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:text=""
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/icon_apagar"
+        android:layout_marginRight="15dp"
+        android:layout_marginEnd="15dp"
+        android:layout_alignTop="@+id/save_button_dialog"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:paddingBottom="50dp" />
 
-        android:layout_below="@+id/prog_text"
-        android:layout_toRightOf="@+id/save_button_dialog"
-        android:layout_gravity="center_horizontal" />
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="50px"
+        android:layout_below="@+id/cancel_button_dialog"
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>
